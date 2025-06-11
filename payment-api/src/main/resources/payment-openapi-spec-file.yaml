@@ -1,0 +1,100 @@
+openapi: 3.0.3
+info:
+  title: Payment Service API
+  version: 1.0.0
+  description: API for purchasing order and performing transaction
+
+paths:
+  /api/order:
+    post:
+      tags:
+        - Order
+      operationId: perform new order
+      summary: Purchase new order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+      responses:
+        '201':
+          description: Purchase Order Sucessfully
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+        default:
+          $ref: '#/components/responses/GenericDefaultResponse'
+
+
+
+
+
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        code:
+          type: string
+        detail:
+          type: string
+        reason:
+          type: string
+      required:
+        - name
+        - code
+        - detail
+
+    OrderRequest:
+      type: object
+      properties:
+        studentId:
+          type: integer
+          format: int32
+        grade:
+          type: string
+        feeType:
+          type: string
+        quantity:
+          type: integer
+          format: int32
+        cardNumber:
+          type: integer
+          format: int32
+        cardType:
+          type: string
+      required:
+        - studentId
+        - grade
+        - feeType
+        - quantity
+
+    OrderResponse:
+      allOf:
+        - $ref: '#/components/schemas/OrderRequest'
+        - type: object
+          properties:
+            feeId:
+              type: integer
+              format: int32
+              readOnly: true
+
+  responses:
+    Generic404Response:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    GenericDefaultResponse:
+      description: This is the default internal server error. System was not able to process this request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'

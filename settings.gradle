@@ -1,0 +1,6 @@
+rootProject.name = 'payment-mgmt-svc'
+include 'payment-api'
+include 'payment-application'
+include 'payment-domain'
+include 'payment-infrastructure'
+
