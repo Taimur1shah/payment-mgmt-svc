@@ -32,8 +32,6 @@ public class PaymentServiceImpl implements PaymentService {
   public TransactionDetails performTransaction(PaymentDto paymentDto) {
 
     StudentDTO studentDTO = studentDetailsClient.getStudentDetails(paymentDto.getStudentId());
-    //FeeDTO feeDTO = feeDetailsClient.getFeeDetails(paymentDto.getTuitionType(),paymentDto.getGrade());
-
 
     TransactionDetails transactionDetails = new TransactionDetails();
     transactionDetails.setStudentId(paymentDto.getStudentId());
@@ -43,10 +41,9 @@ public class PaymentServiceImpl implements PaymentService {
     transactionDetails.setStudentName(studentDTO.getStudentName());
     transactionDetails.setAmount(paymentDto.getAmount());
 
-    save(transactionDetails);
+    TransactionDetails savedTransactionDetails = save(transactionDetails);
 
-
-    return transactionDetails;
+    return savedTransactionDetails;
   }
 
   @Override
