@@ -1,3 +1,4 @@
+/*
 package com.skiply.payment.domain;
 
 
@@ -43,3 +44,4 @@ public class PurchaseDetails {
   }
 }
 
+*/

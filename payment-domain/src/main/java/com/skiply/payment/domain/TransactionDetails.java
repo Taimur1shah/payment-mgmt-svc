@@ -29,8 +29,11 @@ public class TransactionDetails {
   @Column(nullable = false)
   private Integer referenceNumber;
 
+  @Column(name = "amount", nullable = false)
+  private Double amount;
+
   @Column(nullable = false)
-  private Integer cardNumber;
+  private String cardNumber;
 
   @Column(nullable = false)
   private String cardType;

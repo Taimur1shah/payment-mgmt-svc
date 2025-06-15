@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 @Component
 public class FeeDetailsClientImpl implements FeeDetailsClient {
 
-  @Value("${fee.service.url:http://127.0.0.1:8081/api/fees/grade/}")
+  @Value("${fee.service.url:http://127.0.0.1:8081/fee-service/api/fees/}")
   private String feeServiceUrl;
 
   private final RestTemplate restTemplate;
@@ -26,9 +26,9 @@ public class FeeDetailsClientImpl implements FeeDetailsClient {
 
 
   @Override
-  public FeeDTO getFeeDetails(String grade) {
+  public FeeDTO getFeeDetails(String tuitionType,String grade) {
 
-    String url = feeServiceUrl + grade;
+    String url = feeServiceUrl + "tuitionType/"+tuitionType+"/grade"+grade;
 
     ResponseEntity<FeeResponse> response =
         restTemplate.getForEntity(url, FeeResponse.class);

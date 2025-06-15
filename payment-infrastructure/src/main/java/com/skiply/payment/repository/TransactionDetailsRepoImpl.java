@@ -1,6 +1,6 @@
 package com.skiply.payment.repository;
 
-import com.skiply.payment.domain.Fee;
+
 import com.skiply.payment.domain.TransactionDetails;
 import java.util.Optional;
 import org.springframework.stereotype.Repository;
@@ -15,8 +15,8 @@ public class TransactionDetailsRepoImpl implements TransactionDetailsRepository 
   }
 
   @Override
-  public void save(TransactionDetails transactionDetails) {
-    jpaRepository.save(transactionDetails);
+  public TransactionDetails save(TransactionDetails transactionDetails) {
+    return jpaRepository.save(transactionDetails);
   }
 
   @Override

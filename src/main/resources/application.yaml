@@ -31,10 +31,10 @@ logging:
 
 student:
   service:
-    url: http://127.0.0.1:8080/api/students/
+    url: http://127.0.0.1:8080/student-service/api/students/
 fee:
   service:
-    url:http://127.0.0.1:8081/api/fees/grade/
+    url:http://127.0.0.1:8081/fee-service/api/fees/
 springdoc:
   api-docs:
     path: /v3/api-docs

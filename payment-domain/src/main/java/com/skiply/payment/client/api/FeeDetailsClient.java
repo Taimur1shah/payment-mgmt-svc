@@ -5,6 +5,6 @@ import com.skiply.payment.client.dto.StudentDTO;
 
 public interface FeeDetailsClient {
 
-  FeeDTO getFeeDetails(String grade);
+  FeeDTO getFeeDetails(String tuitionType,String grade);
 
 }
