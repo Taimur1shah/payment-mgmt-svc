@@ -6,6 +6,8 @@ import com.skiply.payment.client.dto.FeeDTO;
 import com.skiply.payment.client.dto.FeeResponse;
 import com.skiply.payment.client.dto.StudentDTO;
 import com.skiply.payment.client.dto.StudentResponse;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +27,8 @@ public class FeeDetailsClientImpl implements FeeDetailsClient {
   }
 
 
+  @CircuitBreaker(name = "feeService", fallbackMethod = "fallbackFeeDetails")
+  @Retry(name = "feeService")
   @Override
   public FeeDTO getFeeDetails(String tuitionType,String grade) {
 
@@ -36,5 +40,14 @@ public class FeeDetailsClientImpl implements FeeDetailsClient {
     FeeDTO feeDTO = new FeeDTO();
     BeanUtils.copyProperties(response.getBody(),feeDTO);
     return feeDTO;
+  }
+
+  // fallback method
+  public FeeDTO fallbackFeeDetails(String tuitionType, String grade, Throwable ex) {
+    FeeDTO fallback = new FeeDTO();
+    fallback.setGrade(grade);
+    fallback.setFeeCharges(0D);
+    fallback.setFeeName("Default");
+    return fallback;
   }
 }

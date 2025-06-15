@@ -6,6 +6,11 @@ spring:
     driver-class-name: org.h2.Driver
     username: sa
     password:
+  hikari:
+    maximum-pool-size: 20
+    minimum-idle: 5
+    connection-timeout: 30000
+    idle-timeout: 600000
 
   h2:
     console:
@@ -35,8 +40,49 @@ student:
 fee:
   service:
     url:http://127.0.0.1:8081/fee-service/api/fees/
+
+
 springdoc:
   api-docs:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics
+  endpoint:
+    health:
+      show-details: always
+  health:
+    probes:
+      enabled: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      studentService:
+        failure-rate-threshold: 50
+        sliding-window-size: 10
+        minimum-number-of-calls: 5
+        wait-duration-in-open-state: 10s
+  retry:
+    instances:
+      studentService:
+        max-attempts: 3
+        wait-duration: 2s
+livenessProbe:
+  httpGet:
+    path: /actuator/health/liveness
+    port: 8082
+  initialDelaySeconds: 15
+  periodSeconds: 10
+
+readinessProbe:
+  httpGet:
+    path: /actuator/health/readiness
+    port: 8082
+  initialDelaySeconds: 5
+  periodSeconds: 10
