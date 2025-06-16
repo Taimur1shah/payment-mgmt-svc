@@ -7,12 +7,15 @@ import com.skiply.payment.domain.TransactionDetails;
 import com.skiply.payment.dto.PaymentDto;
 import com.skiply.payment.response.PaymentResponseBuilder;
 import com.skiply.payment.service.PaymentService;
+import java.util.NoSuchElementException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpClientErrorException.NotFound;
 
 @Slf4j
 @RestController
@@ -31,9 +34,14 @@ public class PaymentController implements PaymentApi {
   public ResponseEntity<Transaction200Response> performPayment(PaymentRequest paymentRequest) {
     PaymentDto paymentDto = new PaymentDto();
    BeanUtils.copyProperties(paymentRequest, paymentDto);
-
-   TransactionDetails savedTransactionDetails = paymentService.performTransaction(paymentDto);
-
+    TransactionDetails savedTransactionDetails = null;
+    try {
+      savedTransactionDetails = paymentService.performTransaction(paymentDto);
+   }catch (Exception exception){
+     if(exception.getMessage().contains("Not Found")){
+       throw exception;//new NoSuchElementException(exception.getMessage());
+     }
+   }
     return new ResponseEntity<>(
         PaymentResponseBuilder.buildFeeTransactionResponse(savedTransactionDetails),
         HttpStatus.OK);

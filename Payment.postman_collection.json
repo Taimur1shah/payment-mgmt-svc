@@ -1,29 +1,19 @@
 {
 	"info": {
-		"_postman_id": "a1f1ecc0-be23-4708-9c29-202f041348f0",
+		"_postman_id": "2d07d7cf-3833-4579-a379-60ee1a8ffd92",
 		"name": "Payment",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27333081"
 	},
 	"item": [
 		{
-			"name": "Fee Payment",
+			"name": "Pay Fee",
 			"request": {
 				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "default"
-					},
-					{
-						"key": "Accept",
-						"value": "application/json",
-						"type": "default"
-					}
-				],
+				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"studentId\": 1,\r\n    \"grade\": \"3\",\r\n    \"quantity\": 1,\r\n    \"feeType\":\"Tution\",\r\n    \"cardType\":\"master\",\r\n    \"cardNumber\":\"1234567\"\r\n}",
+					"raw": "{\r\n  \"studentId\": \"1\",\r\n  \"feeName\": \"Tuition Fee\",\r\n  \"grade\": \"Grade 3\",\r\n  \"cardType\": \"master card\",\r\n  \"quantity\":2,\r\n  \"cardNumber\": \"1234-5678-1246-0081\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -31,7 +21,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:8082/api/order",
+					"raw": "http://127.0.0.1:8082/payment-service/api/payment",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -41,8 +31,9 @@
 					],
 					"port": "8082",
 					"path": [
+						"payment-service",
 						"api",
-						"order"
+						"payment"
 					]
 				}
 			},

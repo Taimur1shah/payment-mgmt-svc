@@ -1,11 +1,13 @@
 package com.skiply.payment.aop;
 
+import java.util.NoSuchElementException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.HashMap;
@@ -22,6 +24,12 @@ public class APIControllerAdvice {
     body.put("error", ex.getReason());
     body.put("status", ex.getStatusCode().value());
     return new ResponseEntity<>(body, ex.getStatusCode());
+  }
+
+  @ExceptionHandler(NoSuchElementException.class)
+  public ResponseEntity<Object> handleNotFound(NoSuchElementException ex) {
+    return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        .body(Map.of("error", "Not Found", "message", ex.getMessage()));
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)

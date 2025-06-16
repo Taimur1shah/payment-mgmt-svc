@@ -10,6 +10,7 @@ import com.skiply.payment.repository.TransactionDetailsRepository;
 import com.skiply.payment.service.PaymentService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.github.resilience4j.retry.annotation.Retry;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 import org.springframework.stereotype.Service;
@@ -34,8 +35,14 @@ public class PaymentServiceImpl implements PaymentService {
   @CircuitBreaker(name = "studentService", fallbackMethod = "fallbackTransaction")
   @Retry(name = "studentService")
   public TransactionDetails performTransaction(PaymentDto paymentDto) {
+    StudentDTO studentDTO = null;
+    try{
+       studentDTO = studentDetailsClient.getStudentDetails(paymentDto.getStudentId());
+    }catch (Exception exception){
+      throw new NoSuchElementException(exception.getMessage());
+    }
 
-    StudentDTO studentDTO = studentDetailsClient.getStudentDetails(paymentDto.getStudentId());
+    FeeDTO feeDTO = feeDetailsClient.getFeeDetails(paymentDto.getFeeName(),paymentDto.getGrade());
 
     TransactionDetails transactionDetails = new TransactionDetails();
     transactionDetails.setStudentId(paymentDto.getStudentId());
@@ -43,7 +50,7 @@ public class PaymentServiceImpl implements PaymentService {
     transactionDetails.setCardType(paymentDto.getCardType());
     transactionDetails.setCardNumber(paymentDto.getCardNumber());
     transactionDetails.setStudentName(studentDTO.getStudentName());
-    transactionDetails.setAmount(paymentDto.getAmount());
+    transactionDetails.setAmount(feeDTO.getFeeCharges());
 
     TransactionDetails savedTransactionDetails = save(transactionDetails);
 

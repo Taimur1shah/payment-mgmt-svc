@@ -18,7 +18,7 @@ public class PaymentDto {
   private Integer receiptId;
   private Integer studentId;
   private String grade;
-  private String tuitionType;
+  private String feeName;
   private Double amount;
   private String cardNumber;
   private String cardType;

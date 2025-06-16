@@ -58,6 +58,8 @@ components:
           format: double
         studentName:
           type: string
+        feeName:
+          type: string
         cardNumber:
           type: string
         cardType:

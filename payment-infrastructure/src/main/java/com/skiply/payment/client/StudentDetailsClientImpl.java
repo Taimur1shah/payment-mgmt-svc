@@ -3,6 +3,7 @@ package com.skiply.payment.client;
 import com.skiply.payment.client.api.StudentDetailsClient;
 import com.skiply.payment.client.dto.StudentResponse;
 import com.skiply.payment.client.dto.StudentDTO;
+import java.util.NoSuchElementException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +27,13 @@ public class StudentDetailsClientImpl implements StudentDetailsClient {
   public StudentDTO getStudentDetails(Integer studentId) {
 
     String url = studentServiceUrl + studentId;
+    ResponseEntity<StudentResponse> response = null;
+    try{
+      response = restTemplate.getForEntity(url, StudentResponse.class);
+    } catch (Exception ex){
+      throw ex;
+    }
 
-    ResponseEntity<StudentResponse> response =
-        restTemplate.getForEntity(url, StudentResponse.class);
 
     StudentDTO studentDTO = new StudentDTO();
     BeanUtils.copyProperties(response.getBody(),studentDTO);

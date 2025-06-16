@@ -30,9 +30,9 @@ public class FeeDetailsClientImpl implements FeeDetailsClient {
   @CircuitBreaker(name = "feeService", fallbackMethod = "fallbackFeeDetails")
   @Retry(name = "feeService")
   @Override
-  public FeeDTO getFeeDetails(String tuitionType,String grade) {
+  public FeeDTO getFeeDetails(String feeName,String grade) {
 
-    String url = feeServiceUrl + "tuitionType/"+tuitionType+"/grade"+grade;
+    String url = feeServiceUrl + "grade/"+grade+"/name/"+feeName;
 
     ResponseEntity<FeeResponse> response =
         restTemplate.getForEntity(url, FeeResponse.class);
