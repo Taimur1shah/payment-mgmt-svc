@@ -16,10 +16,10 @@ Repository for Performing fee transaction and generating Receipt microservice.
 
    ./gradlew clean build
 
-   API first approach has been used ,so OpenAPI tool will create the OrderApi controller interface stub
+   API first approach has been used ,so OpenAPI tool will create the PaymentApi controller interface stub
    payment-api --> build -->classes --> com.skiply.payment.api --> PaymentApi
 2. Run the application , it will start on port 8082
-3. Import the Postman collection and execute the curl requests
+3. Import the Postman collection Payment.postman_collection.json, located in project root directory and execute the curl requests
 4. H2 db console can be connected in browser
    JDBC URL : jdbc:h2:mem:paymentdb
    userName : sa
