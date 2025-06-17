@@ -13,7 +13,9 @@ Repository for Performing fee transaction and generating Receipt microservice.
 ## Steps to run the application
 1. This microservice need to be run third after Student and Fee Services are up 
 2.Compile the Project using gradle build by running command in cmd
+
    ./gradlew clean build
+
    API first approach has been used ,so OpenAPI tool will create the OrderApi controller interface stub
    payment-api --> build -->classes --> com.skiply.payment.api --> PaymentApi
 2. Run the application , it will start on port 8082
