@@ -12,20 +12,21 @@ Repository for Performing fee transaction and generating Receipt microservice.
 
 ## Steps to run the application
 1. This microservice need to be run third after Student and Fee Services are up 
+
 2.Compile the Project using gradle build by running command in cmd
 
    ./gradlew clean build
 
    API first approach has been used ,so OpenAPI tool will create the PaymentApi controller interface stub
    payment-api --> build -->classes --> com.skiply.payment.api --> PaymentApi
-2. Run the application , it will start on port 8082
-3. Import the Postman collection Payment.postman_collection.json, located in project root directory and execute the curl requests
-4. H2 db console can be connected in browser
+3. Run the application , it will start on port 8082
+4. Import the Postman collection Payment.postman_collection.json, located in project root directory and execute the curl requests
+5. H2 db console can be connected in browser
    JDBC URL : jdbc:h2:mem:paymentdb
    userName : sa
-5. OpenAPI Spec file is located at
+6. OpenAPI Spec file is located at
    payment-mgmt-svc\payment-api\src\main\resources/payment-openapi-spec-file.yaml
-6. Performance, Scalability, and Reliability Targets
+7. Performance, Scalability, and Reliability Targets
       health checks and readiness
       http://localhost:8082/actuator/metrics
       http://localhost:8082/actuator/health/readiness
